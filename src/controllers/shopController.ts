@@ -81,7 +81,7 @@ export const addToCart = async (req: any, res: any, _next: any) => {
         const product = await Product.findOne({ id: product_id })
         req.user.cart.items = product ? updateCartItems([...req.user.cart.items], product, quantity) : req.user.cart.items
         await req.user.save()
-        return res.status(200)
+        return res.status(200).json({ message: 'Success' })
     } catch(err) {
         console.log('addToCart something went wrong: ', err)
         return res.status(500).json({ message: `addToCart something went wrong: ${err}`})

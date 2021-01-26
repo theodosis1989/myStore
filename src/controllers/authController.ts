@@ -36,13 +36,14 @@ export const performlogIn = async (req: any, res: any, _next: any) => {
             console.log('wrong password')
             return res.status(401).json({ error: 'Wrong password' })
         }
+
         req.session.loggedIn = true
         req.session.user = currentUser
         req.session.cookieSid = req.rawHeaders[13].split('=')[1]
         await req.session.save()
         const payload = { email }
         const token = jwt.sign(payload, secret, { expiresIn: '1h' })
-        res.cookie('token', token, { httpOnly: true }).sendStatus(200)
+        res.status(200).cookie('token', token, { httpOnly: true }).json({ isAdmin: req.session.user.isAdmin })
     } catch(err) {
         res.status(500).json({error: 'Internal server error'})
     }

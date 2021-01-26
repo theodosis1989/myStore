@@ -26,7 +26,7 @@ router.get('/get-user', isAuthenticated, getUser)
 
 router.post('/add-to-cart', isAuthenticated, addToCart)
 
-router.get('/get-orders', getOrders)
+router.get('/get-orders', isAuthenticated, getOrders)
 
 router.post('/post-order', isAuthenticated, postOrder)
 
