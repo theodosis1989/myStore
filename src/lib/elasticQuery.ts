@@ -1,7 +1,10 @@
+import { elasticAggregations } from '../utils/searchUtils'
+
 class ElaticQuery {
     from: number;
     size: number;
     query: any;
+    aggs: any;
 
     constructor(from: number = 0, size: number = 10) {
         this.from = from
@@ -11,6 +14,7 @@ class ElaticQuery {
                 must: []
             }
         }
+        this.aggs = {}
     }
 
     addMultiMatch(queryTerm: string): any {
@@ -21,6 +25,11 @@ class ElaticQuery {
             }
         })
         console.log(JSON.stringify(this))
+        return this
+    }
+
+    aggregations(aggregations: any = elasticAggregations): any {
+        this.aggs = aggregations
         return this
     }
 }
