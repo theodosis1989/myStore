@@ -9,10 +9,9 @@ export const search = async (req: any, res: any, _next: any) => {
     try {
         const client = new ElasticClient()
         const searchBody = new ElasticQuery()
-        if (req.query.aggregations === 'true') {
-            searchBody.aggregations()
-        }
-        const searchResult = await client.executeSearch(searchBody.addMultiMatch(req.query.query))
+        searchBody.getQuery(req.query)
+
+        const searchResult = await client.executeSearch(searchBody)
         const { hits, aggregations } = searchResult.body
         return res.status(200).json(
             { 

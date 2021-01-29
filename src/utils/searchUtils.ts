@@ -10,3 +10,8 @@ export const elasticAggregations = {
         }
     }
 }
+
+export const filterMap = new Map([
+  ['store', 'store_kw_df'],
+  ['type', 'type_kw_df']
+])
