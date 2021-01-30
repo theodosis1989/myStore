@@ -1,4 +1,3 @@
-import { find } from 'lodash'
 import Product from '../db/models/product'
 import Order from '../db/models/order'
 import ElasticQuery from '../lib/elasticQuery'
@@ -43,10 +42,8 @@ export const getProduct = async (req: any, res: any, _next: any) => {
             console.log('Product wasnt found')
             return res.status(404).json({ message: 'Product wasnt found'})
         }
-        const productInCart = find(req.user.cart.items, { product_id: parseInt(id) })
-        return res.status(200).json({ product, productInCart: productInCart || 0 })
+        return res.status(200).json(product)
     } catch (err) {
-        console.log(`getProduct something went wrong: ${err}`)
         return res.status(500).json({ message: `getProduct something went wrong: ${err}`})
     }
 }
@@ -55,28 +52,9 @@ export const getUser = async (req: any, res: any, _next: any) => {
     return res.status(200).json(req.user)
 }
 
-export const getCart = async (req: any, res: any, _next: any) => {
+export const getCart = (req: any, res: any, _next: any) => {
     try {
-        const result = await Promise.all(req.user.cart.items.map(async (item: any) => {
-            const product = await Product.findOne({ id: item.product_id })
-            return {
-                productId: item.productId,
-                product_id: item.product_id,
-                quantity: item.quantity,
-                id: product?.id,
-                title: product?.title,
-                type: product?.type,
-                description: product?.description,
-                price: product?.price,
-                rating: product?.rating,
-                country: product?.country,
-                store: product?.store,
-                expDate: product?.expDate,
-                status: product?.status,
-                vegan: product?.vegan
-            }
-        }))
-        return res.status(200).json(result)
+        return res.status(200).json(req.user.cart.items)
     } catch (err) {
         console.log('getCart something went wrong: ', err)
         return res.status(500).json({ message: `getCart something went wrong: ${err}`})
@@ -87,7 +65,7 @@ export const addToCart = async (req: any, res: any, _next: any) => {
     try {
         const { product_id, quantity } = req.body
         const product = await Product.findOne({ id: product_id })
-        req.user.cart.items = product ? updateCartItems([...req.user.cart.items], product, quantity) : req.user.cart.items
+        req.user.cart.items = product ? updateCartItems(req.user.cart.items, product, quantity) : req.user.cart.items
         await req.user.save()
         return res.status(200).json({ message: 'Success' })
     } catch(err) {

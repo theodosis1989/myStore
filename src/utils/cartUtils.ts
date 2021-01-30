@@ -1,6 +1,10 @@
-import { CartItem } from '../types/types';
+// import { CartItem } from '../types/types';
 
-export const updateCartItems = (cartItems: CartItem[], product: any, quantity: number) => {
-    const restOfItems = cartItems.filter((item: CartItem) => item.product_id !== product.id)
-    return quantity > 0 ? [...restOfItems, { product_id: product.id, productId: product._id, quantity }] : [...restOfItems]
+export const updateCartItems = (cartItems: any[], product: any, quantity: number) => {
+    const restOfItems = cartItems.filter((item: any) => item.product.id !== product.id)
+    const newProduct = {
+        product,
+        quantity
+    }
+    return quantity > 0 ? [...restOfItems, newProduct] : [...restOfItems]
 }

@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import { UserDoc } from '../../types/types';
+import productSchema from "./product"
 
 const userSchema = new mongoose.Schema({
     email: {
@@ -13,15 +14,7 @@ const userSchema = new mongoose.Schema({
     cart: {
         items: [
             {
-                productId: {
-                    type: mongoose.Schema.Types.ObjectId,
-                    ref: 'Product',
-                    required: true
-                },
-                product_id: {
-                    type: Number,
-                    required: true
-                },
+                product: productSchema.schema,
                 quantity: { type: Number, required: true }
             }
         ]
