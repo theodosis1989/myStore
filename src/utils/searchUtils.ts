@@ -1,4 +1,4 @@
-export const elasticAggregations = {
+export const elasticAggregations: any = {
     type: {
         terms: {
             field: 'type'

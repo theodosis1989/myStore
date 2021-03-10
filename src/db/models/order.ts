@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
-import { OrderDoc } from '../../types/types';
+import { IOrder } from '../../types/types';
 
-const orderSchema = new mongoose.Schema({
+const orderSchema = new mongoose.Schema<IOrder>({
   products: [
     {
       product_id: { type: Number, required: true },
@@ -27,4 +27,4 @@ const orderSchema = new mongoose.Schema({
   }
 });
 
-export default mongoose.model<OrderDoc>('Order', orderSchema)
+export default mongoose.model<IOrder>('Order', orderSchema)

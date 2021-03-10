@@ -1,7 +1,8 @@
+import { Request, Response, NextFunction} from 'express';
 import Product from '../db/models/product'
 import dataset from '../products'
 
-export const bulkInsert = (_req: any, res: any, _next: any) => {
+export const bulkInsert = (_req: Request, res: Response, _next: NextFunction) => {
     console.log('bulk insert all')
     try {
         Product.insertMany(dataset)

@@ -3,8 +3,10 @@ import Order from '../db/models/order'
 import ElasticQuery from '../lib/elasticQuery'
 import ElasticClient from '../clients/elasticClient'
 import { updateCartItems } from '../utils/cartUtils'
+import { IOrder, IProduct } from '../types/types'
+import { Request, Response, NextFunction } from 'express';
 
-export const search = async (req: any, res: any, _next: any) => {
+export const search = async (req: Request, res: Response, _next: NextFunction) => {
     try {
         const client = new ElasticClient()
         const searchBody = new ElasticQuery()
@@ -24,7 +26,7 @@ export const search = async (req: any, res: any, _next: any) => {
     }
 }
 
-export const getProducts = async (_req: any, res: any, _next: any) => {
+export const getProducts = async (_req: Request, res: Response, _next: NextFunction) => {
     try {
         const products = await Product.find()
         return res.status(200).json(products)
@@ -34,10 +36,13 @@ export const getProducts = async (_req: any, res: any, _next: any) => {
     }
 }
 
-export const getProduct = async (req: any, res: any, _next: any) => {
+export const getProduct = async (req: Request, res: Response, _next: NextFunction) => {
     try {
         const { id } = req.params
-        const product = await Product.findOne({ id: id })
+        if (!id) {
+            return res.status(401)
+        }
+        const product: IProduct = await Product.findOne({ id: Number(id) }) as IProduct
         if (!product) {
             console.log('Product wasnt found')
             return res.status(404).json({ message: 'Product wasnt found'})
@@ -48,11 +53,11 @@ export const getProduct = async (req: any, res: any, _next: any) => {
     }
 }
 
-export const getUser = async (req: any, res: any, _next: any) => {
+export const getUser = async (req: any, res: Response, _next: NextFunction) => {
     return res.status(200).json(req.user)
 }
 
-export const getCart = (req: any, res: any, _next: any) => {
+export const getCart = (req: any, res: Response, _next: NextFunction) => {
     try {
         return res.status(200).json(req.user.cart.items)
     } catch (err) {
@@ -61,10 +66,10 @@ export const getCart = (req: any, res: any, _next: any) => {
     }
 }
 
-export const addToCart = async (req: any, res: any, _next: any) => {
+export const addToCart = async (req: any, res: Response, _next: NextFunction) => {
     try {
         const { product_id, quantity } = req.body
-        const product = await Product.findOne({ id: product_id })
+        const product: IProduct = await Product.findOne({ id: product_id })
         req.user.cart.items = product ? updateCartItems(req.user.cart.items, product, quantity) : req.user.cart.items
         await req.user.save()
         return res.status(200).json({ message: 'Success' })
@@ -74,8 +79,8 @@ export const addToCart = async (req: any, res: any, _next: any) => {
     }
 }
 
-export const getOrders = async (req: any, res: any, _next: any) => {
-    const orderIds = req.user.orders.map((order:any) => order._id)
+export const getOrders = async (req: any, res: Response, _next: NextFunction) => {
+    const orderIds = req.user.orders.map((order: IOrder) => order.id)
     try {
         const orders = await Order.find({ _id: { $in: orderIds } })
         return res.status(200).json(orders)
@@ -85,7 +90,7 @@ export const getOrders = async (req: any, res: any, _next: any) => {
     }
 }
 
-export const postOrder = async (req: any, res: any, _next: any) => {
+export const postOrder = async (req: any, res: Response, _next: any) => {
     try {
         const { items } = req.user.cart
         const myOrder = new Order({

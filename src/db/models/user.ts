@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
-import { UserDoc } from '../../types/types';
+import { IUser } from '../../types/types';
 import productSchema from "./product"
 
-const userSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema<IUser>({
     email: {
         type: String,
         required: true
@@ -34,16 +34,4 @@ const userSchema = new mongoose.Schema({
     }
 })
 
-// userSchema.methods.addToCart = function(product) {
-
-// }
-
-// userSchema.methods.removeFromCart = function(productId) {
-
-// }
-
-// userSchema.methods.emptyCart = function() {
-
-// }
-
-export default mongoose.model<UserDoc>('User', userSchema)
+export default mongoose.model<IUser>('User', userSchema)

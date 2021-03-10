@@ -1,4 +1,6 @@
-const isAuthenticated = (req: any, res: any, next: any) => {
+import { Response, NextFunction } from 'express';
+
+const isAuthenticated = (req: any, res: Response, next: NextFunction): void | NextFunction => {
     if (req.session.loggedIn) {
         next()
     } else {

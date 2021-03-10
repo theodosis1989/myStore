@@ -1,8 +1,7 @@
-import { Decimal128 } from 'mongodb';
 import mongoose from 'mongoose'
-import { ProductDoc } from '../../types/types';
+import { IProduct } from '../../types/types';
 
-const productSchema = new mongoose.Schema({
+const productSchema = new mongoose.Schema<IProduct>({
     id: {
         type: Number,
         required: true,
@@ -25,7 +24,7 @@ const productSchema = new mongoose.Schema({
         required: true
     },
     rating: {
-        type: Decimal128,
+        type: Number,
         required: true
     },
     country: {
@@ -50,4 +49,4 @@ const productSchema = new mongoose.Schema({
     }
 });
 
-export default mongoose.model<ProductDoc>('Product', productSchema)
+export default mongoose.model<IProduct>('Product', productSchema)

@@ -1,6 +1,5 @@
 import express from 'express'
 import isAuthenticated from '../middlewares/isAuthenticated';
-// import isAdmin from '../middlewares/isAdmin';
 import {
     getProducts,
     getProduct,

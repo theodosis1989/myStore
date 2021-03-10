@@ -6,13 +6,15 @@
   "scripts": {
     "build": "tsc --build",
     "clean": "tsc --build --clean",
-    "test": "mocha -r ts-node/register 'tests/**/*.test.ts'",
+    "test": "MONGO_URL=mongodb://127.0.0.1:27017/shop-test mocha -r ts-node/register 'tests/**/*.test.ts' --exit",
     "start": "node .",
-    "start-watch": "ts-node-dev --no-notify --ignore-watch node_modules -r tsconfig-paths/register -r 'dotenv/config' src/index.ts"
+    "start-watch": "ts-node-dev --no-notify --ignore-watch node_modules -r tsconfig-paths/register -r 'dotenv/config' src/index.ts",
+    "mongo:run": "docker-compose -f mongo.yml up"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
     "@types/bcryptjs": "2.4.2",
     "@types/body-parser": "1.19.0",
     "@types/chai": "^4.2.14",
@@ -29,6 +31,7 @@
     "@types/mongodb": "3.5.34",
     "@types/mongoose": "5.10.1",
     "@types/node": "^12.7.2",
+    "@types/sinon": "^9.0.10",
     "@types/supertest": "^2.0.10",
     "@typescript-eslint/eslint-plugin": "^2.0.0",
     "@typescript-eslint/parser": "^2.0.0",
@@ -42,6 +45,7 @@
   },
   "dependencies": {
     "@elastic/elasticsearch": "^7.10.0",
+    "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "connect-mongodb-session": "^2.0.3",
@@ -55,6 +59,7 @@
     "lodash": "^4.17.20",
     "mongodb": "^3.1.6",
     "mongoose": "^5.11.9",
+    "sinon": "^9.2.4",
     "ts-node": "^9.1.1"
   },
   "nodemonConfig": {

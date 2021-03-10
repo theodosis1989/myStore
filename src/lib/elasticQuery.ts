@@ -18,7 +18,7 @@ class ElaticQuery {
         this.aggs = {}
     }
 
-    addMultiMatch(queryTerm: string): any {
+    addMultiMatch(queryTerm: string): ElaticQuery {
         this.query.bool.must.push({
             multi_match: { 
                 query: queryTerm,
@@ -28,7 +28,7 @@ class ElaticQuery {
         return this
     }
 
-    addTermFilters(invertedIndex: string, value: string[]): any {
+    addTermFilters(invertedIndex: string, value: string[]): ElaticQuery {
         const termFilter = value.length > 1 
             ? { terms: { [invertedIndex]: value } }
             : { term: { [invertedIndex]: value[0] } }
@@ -36,12 +36,12 @@ class ElaticQuery {
         return this
     }
 
-    aggregations(aggregations: any = elasticAggregations): any {
+    aggregations(aggregations: any = elasticAggregations): ElaticQuery {
         this.aggs = aggregations
         return this
     }
 
-    getQuery(request: any) {
+    getQuery(request: any): ElaticQuery {
         if (request.aggregations === 'true') {
             this.aggregations()
         }

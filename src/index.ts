@@ -1,8 +1,8 @@
-import app from './app'
+import createApp from './app'
 import { connectDB } from './db/index';
 
 connectDB().then(() => 
-    app.listen(4000, () => {
+    createApp().listen(4000, () => {
         console.log('Server has started')
     })
-)
+).catch((err: any) => console.log('Couldnt connect to the db', err))
