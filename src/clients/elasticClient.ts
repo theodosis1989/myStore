@@ -1,5 +1,5 @@
 import 'dotenv/config'
-import { Client } from '@elastic/elasticsearch'
+import { ApiResponse, Client } from '@elastic/elasticsearch'
 
 const defaultClient = new Client({
     node: process.env.ELASTIC_URL,
@@ -18,7 +18,7 @@ class ElasticClient {
         this.client = client
     }
 
-    async executeSearch(searchBody: any): Promise<any> {
+    async executeSearch(searchBody: any): Promise<ApiResponse<Record<string, any>, unknown>> {
         return this.client.search({
             index: this.indexName,
             from: 0,

@@ -3,8 +3,8 @@ import Order from '../db/models/order'
 import ElasticQuery from '../lib/elasticQuery'
 import ElasticClient from '../clients/elasticClient'
 import { updateCartItems } from '../utils/cartUtils'
-import { IOrder, IProduct } from '../types/types'
 import { Request, Response, NextFunction } from 'express';
+import { IOrder, IProduct } from '../types/types'
 
 export const search = async (req: Request, res: Response, _next: NextFunction) => {
     try {
@@ -42,7 +42,7 @@ export const getProduct = async (req: Request, res: Response, _next: NextFunctio
         if (!id) {
             return res.status(401)
         }
-        const product: IProduct = await Product.findOne({ id: Number(id) }) as IProduct
+        const product: IProduct | null = await Product.findOne({ id: Number(id) })
         if (!product) {
             console.log('Product wasnt found')
             return res.status(404).json({ message: 'Product wasnt found'})
@@ -53,24 +53,25 @@ export const getProduct = async (req: Request, res: Response, _next: NextFunctio
     }
 }
 
-export const getUser = async (req: any, res: Response, _next: NextFunction) => {
+export const getUser = async (req: Request, res: Response, _next: NextFunction) => {
     return res.status(200).json(req.user)
 }
 
 export const getCart = (req: any, res: Response, _next: NextFunction) => {
     try {
-        return res.status(200).json(req.user.cart.items)
+        return res.status(200).json(req.user.cartItems)
     } catch (err) {
         console.log('getCart something went wrong: ', err)
         return res.status(500).json({ message: `getCart something went wrong: ${err}`})
     }
 }
 
-export const addToCart = async (req: any, res: Response, _next: NextFunction) => {
+export const addToCart = async (req: Request, res: Response, _next: NextFunction) => {
     try {
-        const { product_id, quantity } = req.body
-        const product: IProduct = await Product.findOne({ id: product_id })
-        req.user.cart.items = product ? updateCartItems(req.user.cart.items, product, quantity) : req.user.cart.items
+        const { product, quantity } = req.body
+        console.log('product: ', product)
+        const currentCartItems = product ? updateCartItems(req.user.cartItems, product, quantity) : req.user.cartItems
+        req.user.cartItems = JSON.stringify(currentCartItems)
         await req.user.save()
         return res.status(200).json({ message: 'Success' })
     } catch(err) {
@@ -79,7 +80,7 @@ export const addToCart = async (req: any, res: Response, _next: NextFunction) =>
     }
 }
 
-export const getOrders = async (req: any, res: Response, _next: NextFunction) => {
+export const getOrders = async (req: Request, res: Response, _next: NextFunction) => {
     const orderIds = req.user.orders.map((order: IOrder) => order.id)
     try {
         const orders = await Order.find({ _id: { $in: orderIds } })
@@ -90,21 +91,20 @@ export const getOrders = async (req: any, res: Response, _next: NextFunction) =>
     }
 }
 
-export const postOrder = async (req: any, res: Response, _next: any) => {
+export const postOrder = async (req: Request, res: Response, _next: NextFunction) => {
     try {
-        const { items } = req.user.cart
+        const { cartItems } = req.user
         const myOrder = new Order({
-            products: items,
+            products: cartItems,
             user: {
                 email: req.user.email,
-                userId: req.user._id
             },
             submitDate: new Date('2020-01-01'),
             status: 'available'
         })
         const orderId = await myOrder.save()
 
-        req.user.cart.items = []
+        req.user.cartItems = new Map()
         req.user.orders.push(orderId)
         await req.user.save()
         return res.status(200)

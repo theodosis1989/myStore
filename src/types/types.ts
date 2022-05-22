@@ -1,32 +1,27 @@
-import mongoose from 'mongoose';
-export interface CartItem {
+export interface ICartItem {
     product: IProduct;
     quantity: number;
 }
 
-export interface Items {
-    items: CartItem[];
-}
-export interface IUser extends mongoose.Document {
+export interface IUser {
     email: string;
     password: string;
-    cart: Items;
+    cartItems: Map<number, ICartItem>;
     orders: IOrder[];
     isAdmin: boolean;
+    save(): void;
 }
 
-export interface IOrder extends mongoose.Document {
-    products: CartItem[];
+export interface IOrder {
+    id: number;
+    products: ICartItem[];
     user: number;
     userId: number;
     submitDate: Date;
     status: string;
 }
 
-export interface IProduct extends ProductIntefrace, mongoose.Document {
-}
-
-export interface ProductIntefrace {
+export interface IProduct {
     id: number;
     title: string;
     type: string[];
@@ -35,7 +30,6 @@ export interface ProductIntefrace {
     rating: number;
     country: string;
     store: string;
-    expDate: Date;
-    status: string;
+    expDate: string;
     vegan: boolean;
 }

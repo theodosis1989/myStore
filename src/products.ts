@@ -1,4 +1,6 @@
-const dataset: any = [
+import { IProduct } from "./types/types"
+
+const dataset: IProduct[] = [
   {
     "id": 101,
     "title": "Brown eggs",
@@ -9,7 +11,6 @@ const dataset: any = [
     "country": "UK",
     "store": "ICA",
     "expDate": "2020-05-01",
-    "status": "available",
     "vegan": false,
   },
   {
@@ -22,7 +23,6 @@ const dataset: any = [
     "country": "France",
     "store": "ICA",
     "expDate": "2020-10-01",
-    "status": "in stock",
     "vegan": true,
   },
   {
@@ -35,7 +35,6 @@ const dataset: any = [
     "country": "Greece",
     "store": "ICA",
     "expDate": "2020-10-05",
-    "status": "unavailable",
     "vegan": true,
   },
   {
@@ -48,7 +47,6 @@ const dataset: any = [
     "country": "Italy",
     "store": "ICA",
     "expDate": "2020-06-01",
-    "status": "available",
     "vegan": true,
   },
   {
@@ -61,7 +59,6 @@ const dataset: any = [
     "country": "Italy",
     "store": "ICA",
     "expDate": "2020-07-01",
-    "status": "available",
     "vegan": true,
   },
   {
@@ -74,7 +71,6 @@ const dataset: any = [
     "country": "Italy",
     "store": "COOP",
     "expDate": "2020-08-01",
-    "status": "available",
     "vegan": true,
   },
   {
@@ -87,7 +83,6 @@ const dataset: any = [
     "country": "Finland",
     "store": "COOP",
     "expDate": "2020-08-01",
-    "status": "in stock",
     "vegan": false,
   },
   {
@@ -100,7 +95,6 @@ const dataset: any = [
     "country": "Italy",
     "store": "COOP",
     "expDate": "2020-12-01",
-    "status": "unavailable",
     "vegan": false,
   },
   {
@@ -113,7 +107,6 @@ const dataset: any = [
     "country": "Spain",
     "store": "COOP",
     "expDate": "2020-02-01",
-    "status": "available",
     "vegan": false,
   },
   {
@@ -126,7 +119,6 @@ const dataset: any = [
     "country": "Sweden",
     "store": "COOP",
     "expDate": "2020-03-01",
-    "status": "available",
     "vegan": true,
   },
   {
@@ -139,7 +131,6 @@ const dataset: any = [
     "country": "Spain",
     "store": "My Market",
     "expDate": "2020-04-01",
-    "status": "available",
     "vegan": true,
   },
   {
@@ -152,7 +143,6 @@ const dataset: any = [
     "country": "Greece",
     "store": "Hemköp",
     "expDate": "2020-04-01",
-    "status": "in stock",
     "vegan": true,
   },
   {
@@ -165,7 +155,6 @@ const dataset: any = [
     "country": "Greece",
     "store": "Hemköp",
     "expDate": "2020-04-01",
-    "status": "available",
     "vegan": true,
   },
   {
@@ -178,7 +167,6 @@ const dataset: any = [
     "country": "Greece",
     "store": "Hemköp",
     "expDate": "2020-04-01",
-    "status": "available",
     "vegan": true,
   },
   {
@@ -191,7 +179,6 @@ const dataset: any = [
     "country": "UK",
     "store": "Hemköp",
     "expDate": "2020-08-01",
-    "status": "available",
     "vegan": true,
   },
   {
@@ -204,7 +191,6 @@ const dataset: any = [
     "country": "France",
     "store": "My Market",
     "expDate": "2020-02-01",
-    "status": "available",
     "vegan": true,
   },
   {
@@ -217,7 +203,6 @@ const dataset: any = [
     "country": "UK",
     "store": "LIDL",
     "expDate": "2020-02-01",
-    "status": "available",
     "vegan": false,
   },
   {
@@ -230,7 +215,6 @@ const dataset: any = [
     "country": "Spain",
     "store": "LIDL",
     "expDate": "2020-05-01",
-    "status": "available",
     "vegan": true,
   },
   {
@@ -243,7 +227,6 @@ const dataset: any = [
     "country": "Spain",
     "store": "LIDL",
     "expDate": "2020-10-01",
-    "status": "available",
     "vegan": true,
   },
   {
@@ -256,7 +239,6 @@ const dataset: any = [
     "country": "Spain",
     "store": "LIDL",
     "expDate": "2020-10-01",
-    "status": "available",
     "vegan": true,
   },
   {
@@ -269,7 +251,6 @@ const dataset: any = [
     "country": "Italy",
     "store": "ICA",
     "expDate": "2020-10-01",
-    "status": "available",
     "vegan": false,
   },
   {
@@ -282,7 +263,6 @@ const dataset: any = [
     "country": "Spain",
     "store": "ICA",
     "expDate": "2020-10-01",
-    "status": "available",
     "vegan": false,
   },
   {
@@ -295,7 +275,6 @@ const dataset: any = [
     "country": "Sweden",
     "store": "ICA",
     "expDate": "2020-11-01",
-    "status": "available",
     "vegan": true,
   },
   {
@@ -308,7 +287,6 @@ const dataset: any = [
     "country": "Sweden",
     "store": "ICA",
     "expDate": "2020-11-01",
-    "status": "in stock",
     "vegan": false,
   },
   {
@@ -321,7 +299,6 @@ const dataset: any = [
     "country": "Greece",
     "store": "ICA",
     "expDate": "2020-11-01",
-    "status": "in stock",
     "vegan": false,
   },
   {
@@ -334,7 +311,6 @@ const dataset: any = [
     "country": "Finland",
     "store": "COOP",
     "expDate": "2020-03-01",
-    "status": "unavailable",
     "vegan": false,
   },
   {
@@ -347,7 +323,6 @@ const dataset: any = [
     "country": "Finland",
     "store": "COOP",
     "expDate": "2020-04-01",
-    "status": "available",
     "vegan": true,
   },
   {
@@ -360,7 +335,6 @@ const dataset: any = [
     "country": "Finland",
     "store": "COOP",
     "expDate": "2020-05-01",
-    "status": "available",
     "vegan": true,
   },
   {
@@ -373,7 +347,6 @@ const dataset: any = [
     "country": "Italy",
     "store": "COOP",
     "expDate": "2020-05-01",
-    "status": "available",
     "vegan": false,
   },
   {
@@ -386,7 +359,6 @@ const dataset: any = [
     "country": "Spain",
     "store": "COOP",
     "expDate": "2020-05-01",
-    "status": "available",
     "vegan": false,
   },
   {
@@ -399,7 +371,6 @@ const dataset: any = [
     "country": "Spain",
     "store": "Hemköp",
     "expDate": "2020-06-01",
-    "status": "available",
     "vegan": true,
   },
   {
@@ -412,7 +383,6 @@ const dataset: any = [
     "country": "Spain",
     "store": "Hemköp",
     "expDate": "2020-09-01",
-    "status": "available",
     "vegan": true,
   },
   {
@@ -425,7 +395,6 @@ const dataset: any = [
     "country": "Greece",
     "store": "Hemköp",
     "expDate": "2020-05-01",
-    "status": "available",
     "vegan": false,
   },
   {
@@ -438,7 +407,6 @@ const dataset: any = [
     "country": "Greece",
     "store": "Hemköp",
     "expDate": "2020-01-01",
-    "status": "available",
     "vegan": true,
   },
   {
@@ -451,7 +419,6 @@ const dataset: any = [
     "country": "Greece",
     "store": "Hemköp",
     "expDate": "2020-05-01",
-    "status": "available",
     "vegan": true,
   },
   {
@@ -464,7 +431,6 @@ const dataset: any = [
     "country": "Greece",
     "store": "LIDL",
     "expDate": "2020-08-01",
-    "status": "available",
     "vegan": true,
   },
   {
@@ -477,7 +443,6 @@ const dataset: any = [
     "country": "Italy",
     "store": "LIDL",
     "expDate": "2020-11-01",
-    "status": "available",
     "vegan": false,
   },
   {
@@ -490,7 +455,6 @@ const dataset: any = [
     "country": "Sweden",
     "store": "LIDL",
     "expDate": "2020-09-01",
-    "status": "available",
     "vegan": true,
   },
   {
@@ -503,7 +467,6 @@ const dataset: any = [
     "country": "Sweden",
     "store": "LIDL",
     "expDate": "2020-11-01",
-    "status": "available",
     "vegan": false,
   },
   {
@@ -516,7 +479,6 @@ const dataset: any = [
     "country": "Sweden",
     "store": "LIDL",
     "expDate": "2020-11-01",
-    "status": "available",
     "vegan": true,
   },
   {
@@ -529,7 +491,6 @@ const dataset: any = [
     "country": "Italy",
     "store": "My Market",
     "expDate": "2020-11-01",
-    "status": "available",
     "vegan": false,
   },
   {
@@ -542,7 +503,6 @@ const dataset: any = [
     "country": "Finland",
     "store": "ICA",
     "expDate": "2020-10-01",
-    "status": "available",
     "vegan": false,
   },
   {
@@ -555,7 +515,6 @@ const dataset: any = [
     "country": "Finland",
     "store": "ICA",
     "expDate": "2020-02-01",
-    "status": "available",
     "vegan": true,
   },
   {
@@ -568,7 +527,6 @@ const dataset: any = [
     "country": "France",
     "store": "ICA",
     "expDate": "2020-03-01",
-    "status": "available",
     "vegan": true,
   },
   {
@@ -581,7 +539,6 @@ const dataset: any = [
     "country": "France",
     "store": "ICA",
     "expDate": "2020-11-01",
-    "status": "available",
     "vegan": false,
   },
   {
@@ -594,7 +551,6 @@ const dataset: any = [
     "country": "France",
     "store": "COOP",
     "expDate": "2020-11-01",
-    "status": "available",
     "vegan": true,
   },
   {
@@ -607,7 +563,6 @@ const dataset: any = [
     "country": "France",
     "store": "COOP",
     "expDate": "2020-11-01",
-    "status": "available",
     "vegan": false,
   },
   {
@@ -620,7 +575,6 @@ const dataset: any = [
     "country": "France",
     "store": "Hemköp",
     "expDate": "2020-11-01",
-    "status": "in stock",
     "vegan": true,
   },
   {
@@ -633,7 +587,6 @@ const dataset: any = [
     "country": "France",
     "store": "Hemköp",
     "expDate": "2020-11-01",
-    "status": "unavailable",
     "vegan": true,
   },
   {
@@ -646,7 +599,6 @@ const dataset: any = [
     "country": "France",
     "store": "LIDL",
     "expDate": "2020-11-01",
-    "status": "unavailable",
     "vegan": true,
   },
   {
@@ -659,7 +611,6 @@ const dataset: any = [
     "country": "France",
     "store": "LIDL",
     "expDate": "2020-11-01",
-    "status": "in stock",
     "vegan": true,
   },
   {
@@ -672,7 +623,6 @@ const dataset: any = [
     "country": "Sweden",
     "store": "ICA",
     "expDate": "2020-12-01",
-    "status": "available",
     "vegan": false,
   },
   {
@@ -685,7 +635,6 @@ const dataset: any = [
     "country": "Sweden",
     "store": "ICA",
     "expDate": "2020-12-01",
-    "status": "available",
     "vegan": false,
   },
   {
@@ -698,7 +647,6 @@ const dataset: any = [
     "country": "Sweden",
     "store": "ICA",
     "expDate": "2020-12-01",
-    "status": "available",
     "vegan": false,
   }
 ]

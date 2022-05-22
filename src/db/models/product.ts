@@ -5,16 +5,12 @@ const productSchema = new mongoose.Schema<IProduct>({
     id: {
         type: Number,
         required: true,
-        index: { unique: true }
     },
     title: {
         type: String,
         required: true
     },
-    type: {
-        type: Array,
-        required: true
-    },
+    type: [{ type: String, required: true }],
     description: {
         type: String,
         required: true
@@ -36,12 +32,8 @@ const productSchema = new mongoose.Schema<IProduct>({
         required: true
     },
     expDate: {
-        type: Date,
-        required: false
-    },
-    status: {
         type: String,
-        required: true
+        required: false
     },
     vegan: {
         type: Boolean,

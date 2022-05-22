@@ -8,7 +8,7 @@ import User from '../../src/db/models/user'
 import createApp from '../../src/app'
 import createProduct from '../factories/productFactory';
 import * as getUserMiddleware from '../../src/middlewares/getUser';
-import { IUser, ProductIntefrace } from '../../src/types/types';
+import { IUser, IProduct } from '../../src/types/types';
 
 describe('.shopController', () => {
     let app: any
@@ -47,7 +47,7 @@ describe('.shopController', () => {
         })
 
         it('should return the product with that id', async () => {
-            const product1: ProductIntefrace = createProduct(123456)
+            const product1: IProduct = createProduct(123456)
             app = createApp()
             await Product.insertMany([product1])
 
@@ -57,7 +57,7 @@ describe('.shopController', () => {
             expect(status).to.equal(200)
             expect(omit(body, ['__v', '_id'])).to.eql({
                 ...product1,
-                expDate: product1.expDate.toISOString()
+                expDate: product1.expDate
             })
         })
     })
@@ -67,8 +67,8 @@ describe('.shopController', () => {
         beforeEach(async() => await Product.deleteMany({}))
 
         it('should return all the products in the collection', async () => {
-            const product1: ProductIntefrace = createProduct(123457)
-            const product2: ProductIntefrace = createProduct(654321)
+            const product1: IProduct = createProduct(123457)
+            const product2: IProduct = createProduct(654321)
             app = createApp()
             await Product.insertMany([product1, product2])
 
@@ -80,11 +80,11 @@ describe('.shopController', () => {
             expect(normalizedBody).to.eql([
                 {
                     ...product1,
-                    expDate: product1.expDate.toISOString()
+                    expDate: product1.expDate
                 },
                 {
                     ...product2,
-                    expDate: product1.expDate.toISOString()
+                    expDate: product1.expDate
                 }
             ])
         })

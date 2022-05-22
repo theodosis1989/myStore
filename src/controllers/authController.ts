@@ -4,8 +4,6 @@ import bcrypt from 'bcrypt'
 import User from '../db/models/user'
 import { IUser } from '../types/types';
 
-const secret = 'mysecretttt'
-
 export const performSingUp = async (req: Request, res: Response, _next: NextFunction) => {
     const { email, password, repeatPassword } = req.body
     const user = await User.findOne({ email: email })
@@ -18,7 +16,7 @@ export const performSingUp = async (req: Request, res: Response, _next: NextFunc
     }
 
     const hashedPassword = bcrypt.hashSync(password, 10)
-    const newUser = new User({ email: email, password: hashedPassword })
+    const newUser = new User({ email: email, password: hashedPassword, isAdmin: false })
     await newUser.save()
     return res.send(`New user ${email} been created`)
 }
@@ -32,10 +30,11 @@ export const performlogIn = async (req: any, res: Response, _next: NextFunction)
         const { email, password } = req.body
         const currentUser: IUser | null = await User.findOne({ email: email })
         if (!currentUser) {
-            console.log('user doesnt exists')
             return res.status(401).json({ error: 'User doesnt exist' })
         }
-        if (currentUser.password && bcrypt.compareSync(currentUser.password, password)) {
+
+        const passwordComparison = await bcrypt.compare(password, currentUser.password)
+        if (!passwordComparison) {
             console.log('wrong password')
             return res.status(401).json({ error: 'Wrong password' })
         }
@@ -45,7 +44,7 @@ export const performlogIn = async (req: any, res: Response, _next: NextFunction)
         req.session.cookieSid = req.rawHeaders[13].split('=')[1]
         await req.session.save()
         const payload = { email }
-        const token = jwt.sign(payload, secret, { expiresIn: '1h' })
+        const token = jwt.sign(payload, process.env.SECRET || '' , { expiresIn: '1h' })
         return res.status(200).cookie('token', token, { httpOnly: true }).json({ isAdmin: req.session.user.isAdmin })
     } catch(err) {
         return res.status(500).json({error: 'Internal server error'})
@@ -57,7 +56,7 @@ export const getLogInPage = (_req: Request, res: Response, _next: NextFunction) 
 }
 
 export const logOut = async (req: Request, res: Response, _next: NextFunction) => {
-    req.session.destroy((err: any) => {
+    req.session.destroy((err: Error) => {
         console.log('the error was', err)
     })
     console.log('user has been logged out')

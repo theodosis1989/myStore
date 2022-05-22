@@ -1,33 +1,23 @@
 import mongoose from 'mongoose';
-import { IUser } from '../../types/types';
-import productSchema from "./product"
-
+import { IUser, ICartItem } from '../../types/types';
 const userSchema = new mongoose.Schema<IUser>({
     email: {
         type: String,
-        required: true
+        required: true,
+        index: { unique: true }
     },
     password: {
         type: String,
         required: true
     },
-    cart: {
-        items: [
-            {
-                product: productSchema.schema,
-                quantity: { type: Number, required: true }
-            }
-        ]
+    cartItems: {
+        type: Map,
+        of: { type: typeof ICartItem }
     },
-    orders: [
-        {
-            orderId: {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'Order',
-                required: false
-            }
-        }
-    ],
+    orders: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Order'
+    }],
     isAdmin: {
         type: Boolean,
         required: true

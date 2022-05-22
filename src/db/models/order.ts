@@ -2,10 +2,10 @@ import mongoose from 'mongoose'
 import { IOrder } from '../../types/types';
 
 const orderSchema = new mongoose.Schema<IOrder>({
+  id: { type: Number, required: true },
   products: [
     {
-      product_id: { type: Number, required: true },
-      productId: {
+      product: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: 'Product'
@@ -15,15 +15,8 @@ const orderSchema = new mongoose.Schema<IOrder>({
     
   ],
   user: {
-    email: {
-      type: String,
-      required: true
-    },
-    userId: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-      ref: 'User'
-    }
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
   }
 });
 

@@ -1,10 +1,10 @@
+import 'dotenv/config'
 import mongoose from 'mongoose'
 
 export const connectDB = async () => {
     try {
-        await mongoose.connect(process.env.MONGO_URL || '',
-            { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true }
-        )
+        await mongoose.connect(process.env.MONGO_URL || '')
+
         console.log('Mongo is ready to use!')
     } catch (err) {
         console.log(`Test MongoDB connection error. Please make sure MongoDB is running. ${err}`)

@@ -5,4 +5,4 @@ connectDB().then(() =>
     createApp().listen(4000, () => {
         console.log('Server has started')
     })
-).catch((err: any) => console.log('Couldnt connect to the db', err))
+).catch((err: Error) => console.log('Couldnt connect to the db', err))

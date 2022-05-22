@@ -1,9 +1,0 @@
-FROM node:12.20.1
-
-ENV INSTALL_PATH /app
-
-WORKDIR $INSTALL_PATH
-COPY yarn.lock package.json ./
-
-RUN yarn install
-COPY . $INSTALL_PATH
