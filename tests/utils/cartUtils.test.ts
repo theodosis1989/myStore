@@ -8,7 +8,7 @@ describe('.updateCartItems', () => {
         if (map1.size !== map2.size) {
             return false;
         }
-        for (var [key, val] of map1) {
+        for (const [key, val] of map1) {
             const testVal = map2.get(key);
             if (JSON.stringify(testVal) !== JSON.stringify(val) || (testVal === undefined && !map2.has(key))) {
                 return false;

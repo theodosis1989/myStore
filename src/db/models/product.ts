@@ -5,12 +5,15 @@ const productSchema = new mongoose.Schema<IProduct>({
     id: {
         type: Number,
         required: true,
+        index: { unique: true }
     },
     title: {
         type: String,
         required: true
     },
-    type: [{ type: String, required: true }],
+    type: [
+        { type: String, required: true }
+    ],
     description: {
         type: String,
         required: true

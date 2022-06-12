@@ -2,7 +2,11 @@ import mongoose from 'mongoose'
 import { IOrder } from '../../types/types';
 
 const orderSchema = new mongoose.Schema<IOrder>({
-  id: { type: Number, required: true },
+  id: {
+    type: Number,
+    required: true,
+    index: { unique: true}
+  },
   products: [
     {
       product: {

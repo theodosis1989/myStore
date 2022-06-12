@@ -71,7 +71,7 @@ export const addToCart = async (req: Request, res: Response, _next: NextFunction
         const { product, quantity } = req.body
         console.log('product: ', product)
         const currentCartItems = product ? updateCartItems(req.user.cartItems, product, quantity) : req.user.cartItems
-        req.user.cartItems = JSON.stringify(currentCartItems)
+        //req.user.cartItems = JSON.stringify(currentCartItems)
         await req.user.save()
         return res.status(200).json({ message: 'Success' })
     } catch(err) {
