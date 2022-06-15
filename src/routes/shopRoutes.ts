@@ -4,7 +4,6 @@ import {
     getProducts,
     getProduct,
     getCart,
-    getUser,
     addToCart,
     getOrders,
     postOrder,
@@ -20,8 +19,6 @@ router.get('/products', getProducts)
 router.get('/product/:id', isAuthenticated, getProduct)
 
 router.get('/get-cart', isAuthenticated, getCart)
-
-router.get('/get-user', isAuthenticated, getUser)
 
 router.post('/add-to-cart', isAuthenticated, addToCart)
 

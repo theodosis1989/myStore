@@ -9,7 +9,7 @@ export interface IUser {
     cartItems: Map<number, ICartItem>;
     orders: IOrder[];
     isAdmin: boolean;
-    save(): void;
+    save(): IUser;
 }
 
 export interface IOrder {
@@ -19,6 +19,7 @@ export interface IOrder {
     userId: number;
     submitDate: Date;
     status: string;
+    save(): IOrder;
 }
 
 export interface IProduct {
@@ -32,4 +33,5 @@ export interface IProduct {
     store: string;
     expDate: string;
     vegan: boolean;
+    save(): IProduct;
 }
